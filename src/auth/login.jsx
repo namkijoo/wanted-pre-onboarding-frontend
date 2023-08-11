@@ -22,6 +22,12 @@ export default function Login() {
     }
 
     useEffect(()=>{
+        if(localStorage.getItem("token")!=null){
+            window.location.href="/todo"
+        }
+    },[])
+
+    useEffect(()=>{
         const regex = /^.{8,}$/;
         
         if(regex.test(pw)){

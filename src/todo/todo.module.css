@@ -1,0 +1,17 @@
+#wrapper{
+    padding:10px;
+    margin-top: 5px;
+}
+
+#submitInput{
+    width: 60%;
+}
+
+#todoWrapper{
+    padding: 5px;
+    margin-top: 20px;
+}
+
+#content{
+    margin-right: 20px;
+}

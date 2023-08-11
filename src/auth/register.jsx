@@ -21,7 +21,11 @@ export default function Register() {
         
     }
 
-    
+    useEffect(()=>{
+        if(localStorage.getItem("token")!=null){
+            window.location.href="/todo"
+        }
+    },[])
 
     useEffect(()=>{
         const regex = /^.{8,}$/;

@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from "react"
 import Axios from "axios";
+import styles from "./todo.module.css"
 
 function Todo() {
     const [todo, setTodo] = useState("")
@@ -115,13 +116,17 @@ function Todo() {
             });
     }
 
-    const click = () => {
-        console.log(todos)
-    }
+    useEffect(()=>{
+        if(localStorage.getItem("token")==null){
+            window.location.href="/signin"
+        }
+    },[])
+    
     return (
-        <div>
-            <div>
-                <input
+        
+            <div id={styles.wrapper}>
+                <input 
+                    id={styles.submitInput}
                     type="text"
                     value={todo}
                     onChange={todoChange}
@@ -129,7 +134,7 @@ function Todo() {
                 <button type="button" onClick={create} data-testid="new-todo-add-button">추가</button>
                 {
                     todos.map((todo) => (
-                        <div key={todo.id}>
+                        <div key={todo.id} id={styles.todoWrapper}>
                             {
                                 editingTodoId === todo.id
                                     ? <li key={todo.id}>
@@ -139,13 +144,15 @@ function Todo() {
                                                     onClick={() => {
                                                         updateTodo(todo);
                                                     }}
-                                                    defaultChecked={todo.isCompleted}/>
+                                                    defaultChecked={todo.isCompleted}
+                                                    data-testid="modify-input"
+                                                    id={styles.content}/>
                                                 <input type="text" value={editTodo} onChange={editOnchage} />
                                             </label>
                                             <button
                                                 type="button"
                                                 data-testid="submit-button"
-                                                onClick={() => updateTodo(todo)}>제출</button>
+                                                onClick={() => {updateTodo(todo); toggleEdit(todo.id)}}>제출</button>
                                             <button
                                                 type="button"
                                                 data-testid="cancel-button"
@@ -161,7 +168,7 @@ function Todo() {
                                                         checkTodo(todo)
                                                     }}
                                                     defaultChecked={todo.isCompleted}/>
-                                                <span>{todo.todo}</span>
+                                                <span id={styles.content}>{todo.todo}</span>
                                             </label>
                                             <button
                                                 type="button"
@@ -180,7 +187,7 @@ function Todo() {
                 }
             </div>
 
-        </div>
+        
     )
 }
 export default Todo
