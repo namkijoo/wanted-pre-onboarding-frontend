@@ -58,6 +58,32 @@ function Todo(){
           console.log(error);
         }
       };
+
+      const updateTodo = (e) => {
+        console.log(!e.isCompleted);
+        Axios.put(
+          `/todos/${e.id}`,
+          {
+            todo:e.todo,
+             isCompleted: !e.isCompleted
+
+        },
+          {
+            headers: {
+              "Authorization": `Bearer ${localStorage.getItem("token")}`,
+              "Content-Type": "application/json"
+            }
+          }
+        )
+        .then((response) => {
+          console.log(response);
+          setCounter(!counter);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      }
+      
       
     
       
@@ -74,7 +100,7 @@ function Todo(){
                 {todos.map((todo)=>(
                     <li key={todo.id}>
                     <label>
-                        <input type="checkbox"/>
+                        <input type="checkbox" onClick={()=>{updateTodo(todo)}} defaultChecked={todo.isCompleted}/>
                         <span>{todo.todo}</span>
                     </label>
                     <button type="button" data-testid="modify-button">수정</button>
